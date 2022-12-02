@@ -20,16 +20,15 @@ namespace AdventOfCode.Day
 
         public void PartOne()
         {
-            var text = File.ReadAllLines(_path);
+            var input = File.ReadAllLines(_path);
 
-            var sumPoints = 0;
-            // Split each row "AY" to 'A' and 'Y'
-            for (int i = 0; i < text.Length; i++)
+            var result = 0;
+            for (int i = 0; i < input.Length; i++)
             {
-                sumPoints += GetPointsForPartOne(text[i]);
+                result += GetPointsForPartOne(input[i]);
             }
 
-            Console.WriteLine("Part one: " + sumPoints);
+            Console.WriteLine($"Advent of Code Day 02 part 1 : {result}");
         }
 
         private static int GetPointsForPartOne(string text)
@@ -62,18 +61,18 @@ namespace AdventOfCode.Day
         public void PartTwo()
         {
 
-            var text = File.ReadAllLines(_path);
+            var input = File.ReadAllLines(_path);
 
-            var sumPoints = 0;
-            for (int i = 0; i < text.Length; i++)
+            var result = 0;
+            for (int i = 0; i < input.Length; i++)
             {
-                sumPoints += GetPointsForPartTwo(text[i]);
+                result += GetPointsForPartTwo(input[i]);
             }
 
-            Console.WriteLine("Part two: " + sumPoints);
+            Console.WriteLine($"Advent of Code Day 02 part 2 : {result}");
         }
 
-        private int GetPointsForPartTwo(string text)
+        private static int GetPointsForPartTwo(string text)
         {
             // If (A X) --> Lose --> rock-scissor = 3 (0 + 3)
             // If (A Y) --> Draw --> rock-rock = 4 (3 + 1)
