@@ -20,8 +20,7 @@ namespace AdventOfCode.Day
         public void PartOne()
         {
             var text = File.ReadAllText(_path);
-            // string. dela upp string när dubbel radbryt
-            // 
+
             var max = 0;
             var elves = text.Split("\r\n\r\n");
             foreach (var elf in elves)
@@ -33,12 +32,11 @@ namespace AdventOfCode.Day
                 {
                     sum += int.Parse(calorie[i]);
                 }
-
                 max = Math.Max(sum, max);
-                // convert to int then calculate sum. Put in var then compare each elf (if bigger then replace)
             }
             Console.WriteLine("Part one: " + max);
         }
+
         public void PartTwo()
         {
             var text = File.ReadAllText(_path);
@@ -55,7 +53,6 @@ namespace AdventOfCode.Day
                     sum += int.Parse(calorie[i]);
                 }
                 sums.Add(sum);
-                // convert to int then calculate sum. Put in var then compare each elf (if bigger then replace)
             }
             sums = sums.OrderByDescending(x => x).ToList();
 
@@ -70,12 +67,7 @@ namespace AdventOfCode.Day
 }
 
 
-
-
-
-
-
-/*
+/*  Jimmys lösning
          public void PartOne()
         {
             var result = File.ReadAllText(_path)
