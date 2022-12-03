@@ -53,8 +53,24 @@ namespace AdventOfCode.Day
 
         public void PartTwo()
         {
-            var input = File.ReadAllLines(_path);
+            var input = File.ReadAllLines(_path).ToList();
             var result = 0;
+
+            for (var i = 0; i < input.Count; i = 0)
+            {
+                var group = input.Take(3).ToList();
+                var intersected = group[0].Intersect(group[1]).ToList();
+                var character = intersected.Intersect(group[2]).First();
+
+                if (char.IsLower(character))
+                    result += character - 96;
+                else
+                    result += character - (64 - 26);
+
+                input.RemoveAt(i);
+                input.RemoveAt(i);
+                input.RemoveAt(i);
+            }
 
             Console.WriteLine($"Advent of Code Day 03 part 2 : {result}");
         }
