@@ -25,13 +25,14 @@ namespace AdventOfCode.Day
             var result = 0;
             foreach (var line in input)
             {
-                //var first = x[..(x.Length / 2)];
-                //var second = x[(x.Length / 2)..];
                 var length = line.Length;
                 var split1 = line[..(length / 2)];
                 var split2 = line[(length / 2)..];
 
-                var character = split1.Intersect(split2).First();
+                var character = split1
+                    .Intersect(split2)
+                    .First();
+
                 if (char.IsLower(character))
                     result += character - 96;
                 else
@@ -53,23 +54,20 @@ namespace AdventOfCode.Day
 
         public void PartTwo()
         {
-            var input = File.ReadAllLines(_path).ToList();
+            var input = File.ReadAllLines(_path).Chunk(3);
             var result = 0;
 
-            for (var i = 0; i < input.Count; i = 0)
+            foreach (var group in input)
             {
-                var group = input.Take(3).ToList();
-                var intersected = group[0].Intersect(group[1]).ToList();
-                var character = intersected.Intersect(group[2]).First();
+                var intersected = group[0]
+                    .Intersect(group[1])
+                    .Intersect(group[2])
+                    .First();
 
-                if (char.IsLower(character))
-                    result += character - 96;
+                if (char.IsLower(intersected))
+                    result += intersected - 96;
                 else
-                    result += character - (64 - 26);
-
-                input.RemoveAt(i);
-                input.RemoveAt(i);
-                input.RemoveAt(i);
+                    result += intersected - (64 - 26);
             }
 
             Console.WriteLine($"Advent of Code Day 03 part 2 : {result}");
