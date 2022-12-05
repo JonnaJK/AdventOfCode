@@ -20,7 +20,16 @@ namespace AdventOfCode.Day
         public void PartOne()
         {
             var input = File.ReadAllLines(_path);
-            var result = 0;
+            var result = input
+                .Select(x => x.Split(','))
+                .Select(x =>
+                {
+                    var first = GetRange(x[0]);
+                    var second = GetRange(x[1]);
+                    var intersects = first.Intersect(second).Count();
+                    return (intersects == first.Count || intersects == second.Count) ? 1 : 0;
+                })
+                .Sum();
 
             //foreach (var line in input)
             //{
@@ -32,46 +41,46 @@ namespace AdventOfCode.Day
             //    result += (intersected == firstElf.Count() || intersected == secondElf.Count() ? 1 : 0);
             //}
 
-            var counter = 0;
-            foreach (var line in input)
-            {
-                var split = line.Split(",");
-                var firstElf = GetRange(split[0]);
-                var secondElf = GetRange(split[1]);
+            //var counter = 0;
+            //foreach (var line in input)
+            //{
+            //    var split = line.Split(",");
+            //    var firstElf = GetRange(split[0]);
+            //    var secondElf = GetRange(split[1]);
 
-                var intersected = firstElf.Intersect(secondElf).ToList();
-                //var isFullyContained = false;
-                if (intersected.Count == firstElf.Count || intersected.Count == secondElf.Count)
-                {
-                    if (firstElf.Count < secondElf.Count)
-                    {
-                        for (int i = 0; i < firstElf.Count; i++)
-                        {
-                            //if (intersected[i] == firstElf[i])
-                            //    isFullyContained = true;
-                            //else
-                            //    isFullyContained = false;
-                        }
-                        counter++;
-                    }
-                    else if (secondElf.Count < firstElf.Count)
-                    {
-                        for (int i = 0; i < secondElf.Count; i++)
-                        {
-                            //if (intersected[i] == secondElf[i])
-                            //    isFullyContained = true;
-                            //else
-                            //    isFullyContained = false;
-                        }
-                        counter++;
-                    }
-                }
-                //if (isFullyContained)
-                //    result += 1;
-            }
+            //    var intersected = firstElf.Intersect(secondElf).ToList();
+            //    //var isFullyContained = false;
+            //    if (intersected.Count == firstElf.Count || intersected.Count == secondElf.Count)
+            //    {
+            //        if (firstElf.Count < secondElf.Count)
+            //        {
+            //            for (int i = 0; i < firstElf.Count; i++)
+            //            {
+            //                //if (intersected[i] == firstElf[i])
+            //                //    isFullyContained = true;
+            //                //else
+            //                //    isFullyContained = false;
+            //            }
+            //            counter++;
+            //        }
+            //        else if (secondElf.Count < firstElf.Count)
+            //        {
+            //            for (int i = 0; i < secondElf.Count; i++)
+            //            {
+            //                //if (intersected[i] == secondElf[i])
+            //                //    isFullyContained = true;
+            //                //else
+            //                //    isFullyContained = false;
+            //            }
+            //            counter++;
+            //        }
+            //    }
+            //    //if (isFullyContained)
+            //    //    result += 1;
+            //}
+            //Console.WriteLine("Counter: " + counter);
 
             Console.WriteLine($"Advent of Code Day 04 part 1 : {result}");
-            Console.WriteLine("Counter: " + counter);
         }
 
         private static List<int> GetRange(string x)
