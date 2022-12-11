@@ -19,6 +19,7 @@ namespace AdventOfCode.Day
 
         public void PartOne()
         {
+            // Jimmys version
             var input = File.ReadAllLines(_path);
             var result = input
                 .Select(x => x.Split(','))
@@ -31,6 +32,7 @@ namespace AdventOfCode.Day
                 })
                 .Sum();
 
+            // Min version
             //foreach (var line in input)
             //{
             //    var split = line.Split(",");
@@ -40,45 +42,6 @@ namespace AdventOfCode.Day
             //    var intersected = firstElf.Intersect(secondElf).Count();
             //    result += (intersected == firstElf.Count() || intersected == secondElf.Count() ? 1 : 0);
             //}
-
-            //var counter = 0;
-            //foreach (var line in input)
-            //{
-            //    var split = line.Split(",");
-            //    var firstElf = GetRange(split[0]);
-            //    var secondElf = GetRange(split[1]);
-
-            //    var intersected = firstElf.Intersect(secondElf).ToList();
-            //    //var isFullyContained = false;
-            //    if (intersected.Count == firstElf.Count || intersected.Count == secondElf.Count)
-            //    {
-            //        if (firstElf.Count < secondElf.Count)
-            //        {
-            //            for (int i = 0; i < firstElf.Count; i++)
-            //            {
-            //                //if (intersected[i] == firstElf[i])
-            //                //    isFullyContained = true;
-            //                //else
-            //                //    isFullyContained = false;
-            //            }
-            //            counter++;
-            //        }
-            //        else if (secondElf.Count < firstElf.Count)
-            //        {
-            //            for (int i = 0; i < secondElf.Count; i++)
-            //            {
-            //                //if (intersected[i] == secondElf[i])
-            //                //    isFullyContained = true;
-            //                //else
-            //                //    isFullyContained = false;
-            //            }
-            //            counter++;
-            //        }
-            //    }
-            //    //if (isFullyContained)
-            //    //    result += 1;
-            //}
-            //Console.WriteLine("Counter: " + counter);
 
             Console.WriteLine($"Advent of Code Day 04 part 1 : {result}");
         }
@@ -93,7 +56,6 @@ namespace AdventOfCode.Day
         {
             var input = File.ReadAllLines(_path);
             var result = 0;
-
             foreach (var line in input)
             {
                 var split = line.Split(",");
@@ -104,9 +66,7 @@ namespace AdventOfCode.Day
                 {
                     result++;
                 }
-                //var intersected = firstElf.Intersect(secondElf).ToList();
             }
-
             Console.WriteLine($"Advent of Code Day 04 part 2 : {result}");
         }
     }
