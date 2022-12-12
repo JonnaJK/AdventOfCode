@@ -1,6 +1,6 @@
 ﻿using AdventOfCode.Day;
 
-namespace AdventOfCode
+namespace AdventOfCode2022
 {
     internal class Program
     {

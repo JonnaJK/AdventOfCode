@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AdventOfCode.Day
+namespace AdventOfCode2022.Day
 {
     internal class Day04
     {
@@ -12,7 +12,7 @@ namespace AdventOfCode.Day
 
         public Day04(string path)
         {
-            _path = Path.Combine(path, $"Input{this.GetType().Name}.txt");
+            _path = Path.Combine(path, $"Input{GetType().Name}.txt");
             PartOne();
             PartTwo();
         }
@@ -28,7 +28,7 @@ namespace AdventOfCode.Day
                     var first = GetRange(x[0]);
                     var second = GetRange(x[1]);
                     var intersects = first.Intersect(second).Count();
-                    return (intersects == first.Count || intersects == second.Count) ? 1 : 0;
+                    return intersects == first.Count || intersects == second.Count ? 1 : 0;
                 })
                 .Sum();
 

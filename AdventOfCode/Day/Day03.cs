@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AdventOfCode.Day
+namespace AdventOfCode2022.Day
 {
     internal class Day03
     {
@@ -13,7 +13,7 @@ namespace AdventOfCode.Day
 
         public Day03(string path)
         {
-            _path = Path.Combine(path, $"Input{this.GetType().Name}.txt");
+            _path = Path.Combine(path, $"Input{GetType().Name}.txt");
             PartOne();
             PartTwo();
         }

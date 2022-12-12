@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using static System.Net.Mime.MediaTypeNames;
 
-namespace AdventOfCode.Day
+namespace AdventOfCode2022.Day
 {
     internal class Day02
     {
@@ -13,7 +13,7 @@ namespace AdventOfCode.Day
 
         public Day02(string path)
         {
-            _path = Path.Combine(path, $"Input{this.GetType().Name}.txt");
+            _path = Path.Combine(path, $"Input{GetType().Name}.txt");
             PartOne();
             PartTwo();
         }
