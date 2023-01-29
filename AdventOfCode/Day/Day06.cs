@@ -27,6 +27,7 @@ namespace AdventOfCode2022.Day
                 test.Sort();
                 for (int j = 0; j < test.Count() - 1; j++)
                 {
+                    // TODO: Here I am
                     if (test[j] == test[j + 1])
                     {
                         break;

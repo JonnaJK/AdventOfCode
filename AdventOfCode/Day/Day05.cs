@@ -21,7 +21,6 @@ namespace AdventOfCode2022.Day
         {
             var input = File.ReadAllLines(_path);
             var seperatorLine = input.ToList().IndexOf("");
-            //var length = input[..(seperatorLine - 1)];
             var numberOfCrates = input[seperatorLine - 1]
                 .TrimEnd()
                 .Last();
@@ -74,7 +73,6 @@ namespace AdventOfCode2022.Day
             var input = File.ReadAllLines(_path);
 
             var seperatorLine = input.ToList().IndexOf("");
-            //var length = input[..(seperatorLine - 1)];
             var numberOfCrates = input[seperatorLine - 1]
                 .TrimEnd()
                 .Last();

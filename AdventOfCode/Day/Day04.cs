@@ -19,7 +19,6 @@ namespace AdventOfCode2022.Day
 
         public void PartOne()
         {
-            // Jimmys version
             var input = File.ReadAllLines(_path);
             var result = input
                 .Select(x => x.Split(','))
@@ -31,17 +30,6 @@ namespace AdventOfCode2022.Day
                     return intersects == first.Count || intersects == second.Count ? 1 : 0;
                 })
                 .Sum();
-
-            // Min version
-            //foreach (var line in input)
-            //{
-            //    var split = line.Split(",");
-            //    var firstElf = GetRange(split[0]);
-            //    var secondElf = GetRange(split[1]);
-
-            //    var intersected = firstElf.Intersect(secondElf).Count();
-            //    result += (intersected == firstElf.Count() || intersected == secondElf.Count() ? 1 : 0);
-            //}
 
             Console.WriteLine($"Advent of Code Day 04 part 1 : {result}");
         }
@@ -62,7 +50,7 @@ namespace AdventOfCode2022.Day
                 var firstElf = GetRange(split[0]);
                 var secondElf = GetRange(split[1]);
 
-                if (firstElf.Intersect(secondElf).Count() > 0)
+                if (firstElf.Intersect(secondElf).Any())
                 {
                     result++;
                 }

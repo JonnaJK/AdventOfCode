@@ -38,17 +38,6 @@ namespace AdventOfCode2022.Day
                 else
                     result += character - (64 - 26);
             }
-            // Length (1-based)
-            //                   1 1 1 1 1 1 1 1 1 1 2 2 2 2 2
-            // 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4
-            // v J r w p W t w J g W r h c s F M M f F F h F p
-            // Index (0-based)
-            //                     1 1 1 1 1 1 1 1 1 1 2 2 2 2
-            // 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3
-
-            // Shoould look like:
-            // split1: vJrwpWtwJgWr
-            // split2: hcsFMMfFFhFp
             Console.WriteLine($"Advent of Code Day 03 part 1 : {result}");
         }
 

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace AdventOfCode2022.Day
 {
@@ -33,29 +32,19 @@ namespace AdventOfCode2022.Day
 
         private static int GetPointsForPartOne(string text)
         {
-            switch (text)
+            return text switch
             {
-                case "A X":          // rock-rock Draw = 4 (3 + 1)
-                    return 4;
-                case "A Y":          // rock-paper win = 8 (6 + 2)
-                    return 8;
-                case "A Z":          // rock-scissor loss = 3 (0 + 3)
-                    return 3;
-                case "B X":          // paper-rock loss = 1 (0 + 1)
-                    return 1;
-                case "B Y":          // paper-paper draw = 5 (3 + 2)
-                    return 5;
-                case "B Z":          // paper-scissor win = 9 (6 + 3)
-                    return 9;
-                case "C X":          // scissor-rock win = 7 (6 + 1)
-                    return 7;
-                case "C Y":          // scissor-paper loss = 2 (0 + 2)
-                    return 2;
-                case "C Z":          // scissor-scissor draw = 6 (3 + 3)
-                    return 6;
-                default:
-                    return 0;
-            }
+                "A X" => 4,         // rock-rock Draw = 4 (3 + 1)
+                "A Y" => 8,         // rock-paper win = 8 (6 + 2)
+                "A Z" => 3,         // rock-scissor loss = 3 (0 + 3)
+                "B X" => 1,         // paper-rock loss = 1 (0 + 1)
+                "B Y" => 5,         // paper-paper draw = 5 (3 + 2)
+                "B Z" => 9,         // paper-scissor win = 9 (6 + 3)
+                "C X" => 7,         // scissor-rock win = 7 (6 + 1)
+                "C Y" => 2,         // scissor-paper loss = 2 (0 + 2)
+                "C Z" => 6,         // scissor-scissor draw = 6 (3 + 3)
+                _ => 0,
+            };
         }
 
         public void PartTwo()
@@ -84,29 +73,19 @@ namespace AdventOfCode2022.Day
             // If (C Y) --> Draw --> scissor-scissor = 6 (3 + 3)
             // If (C Z) --> Win --> scissor-rock = 7 (6 + 1)
 
-            switch (text)
+            return text switch
             {
-                case "A X":
-                    return 3;
-                case "A Y":
-                    return 4;
-                case "A Z":
-                    return 8;
-                case "B X":
-                    return 1;
-                case "B Y":
-                    return 5;
-                case "B Z":
-                    return 9;
-                case "C X":
-                    return 2;
-                case "C Y":
-                    return 6;
-                case "C Z":
-                    return 7;
-                default:
-                    return 0;
-            }
+                "A X" => 3,
+                "A Y" => 4,
+                "A Z" => 8,
+                "B X" => 1,
+                "B Y" => 5,
+                "B Z" => 9,
+                "C X" => 2,
+                "C Y" => 6,
+                "C Z" => 7,
+                _ => 0,
+            };
         }
     }
 }

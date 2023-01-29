@@ -65,28 +65,3 @@ namespace AdventOfCode2022.Day
         }
     }
 }
-
-
-/*  Jimmys lösning
-         public void PartOne()
-        {
-            var result = File.ReadAllText(_path)
-                .Split("\r\n\r\n")
-                .Select(x => x.Split("\r\n").Sum(y => int.Parse(y)))
-                .Max();
-
-            Console.WriteLine($"Advent of Code Day 01 part 1 : {result}");
-        }
-
-        public void PartTwo()
-        {
-            var result = File.ReadAllText(_path)
-                .Split("\r\n\r\n")
-                .Select(x => x.Split("\r\n").Sum(y => int.Parse(y)))
-                .OrderByDescending(x => x)
-                .Take(3)
-                .Sum();
-
-            Console.WriteLine($"Advent of Code Day 01 part 2 : {result}");
-        }
- */
