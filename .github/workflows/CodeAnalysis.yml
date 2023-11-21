@@ -38,6 +38,6 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         shell: powershell
         run: |
-          .\.sonar\scanner\dotnet-sonarscanner begin /k:"JonnaJK_AdventOfCode" /o:"jonnajk" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://
+          .\.sonar\scanner\dotnet-sonarscanner begin /k:"JonnaJK_AdventOfCode" /o:"jonnajk" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
           dotnet build --configuration release
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
