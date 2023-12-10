@@ -1,6 +1,11 @@
 name: Static code analysis with SonarCloud
 on: pull_request
 jobs:
+  say-hello:
+    runs-on: ubuntu-latest
+    steps:
+    - run: echo "Hello!"
+    
   build:
     name: Build and analyze
     runs-on: windows-latest
