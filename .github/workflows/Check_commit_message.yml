@@ -1,0 +1,27 @@
+name: Check for words in commit messages
+
+on:
+  push:
+    branches:
+      master
+  pull_request:
+    branches:
+      master
+  workflow_dispatch:
+
+jobs:
+  Check-commit-message:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Check commit message
+        run: |
+          COMMIT_MSG=$(git log --format=%B -n ${{ github.event.before }}..${{ github.sha }})
+          if [[ "$COMMIT_MSG" != *"Bugfix"* ]]; then
+            echo "Commit message should contain 'Bugfix'."
+            exit 1
+          else
+            echo "Commit message validation successful."
+          fi
