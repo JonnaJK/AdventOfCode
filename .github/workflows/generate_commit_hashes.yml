@@ -18,7 +18,11 @@ jobs:
           git log --format="%H" > commit_hashes.txt
           cat commit_hashes.txt
 
+      - name: List files in workspace # Only to be able to know if the file were created in above step
+        run: ls -R
+
       - name: Upload commit hashes as artifact
+        if: success() # Only upload if previous steps were successful
         uses: actions/upload-artifact@v4
         with:
           name: commit-hashes
