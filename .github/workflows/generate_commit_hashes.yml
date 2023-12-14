@@ -15,7 +15,7 @@ jobs:
         shell: bash
         run: |
           echo "Commit hashes: "
-          git log --format="%H" > commit_hashes.txt
+          git log --format="%H" > ${{ github.workspace }}/commit_hashes.txt
           cat commit_hashes.txt
 
       - name: List files in workspace # Only to be able to know if the file were created in above step
@@ -26,4 +26,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: commit-hashes
-          path: /home/runner/work/AdventOfCode/commit-hashes.txt
+          path: ${{ github.workspace }}/commit_hashes.txt
