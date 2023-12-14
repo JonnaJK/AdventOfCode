@@ -21,7 +21,5 @@ jobs:
       - name: Upload commit hashes as artifact
         uses: actions/upload-artifact@v4
         with:
-          id: get_hashes
           name: commit-hashes
           path: commit-hashes.txt
-        
