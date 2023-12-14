@@ -26,4 +26,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: commit-hashes
-          path: commit-hashes.txt
+          path: ./commit-hashes.txt
