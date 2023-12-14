@@ -1,0 +1,31 @@
+name: Generate commit hashes
+
+on:
+  push:
+    branches:
+      main
+  pull_request:
+    branches:
+      main
+  workflow_dispatch:
+  
+jobs:
+  generate-commit-hashes:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Get commit hashes
+        id: get_hashes
+        run: |
+          echo "Commit hashes: "
+          git log --format=%H" > commit_hashes.txt
+          cat commit_hashes.txt
+
+      - name: Upload commit hashes as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: commit-hashes
+          path: commit-hashes.txt
+        
