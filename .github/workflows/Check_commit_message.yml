@@ -20,7 +20,10 @@ jobs:
         run: |
           COMMIT_MSG=$(git log --format=%B -n ${{ github.event.before }}..${{ github.sha }})
           if [[ "$COMMIT_MSG" != *"Finished"* ]]; then
-            echo "Commit message should contain 'Bugfix'."
+            echo "Commit message should contain 'Finished'."
+            echo "COMMIT_MSG=$(git log --format=%B -n ${{ github.event.before }}..${{ github.sha }})"
+            echo "[[ "$COMMIT_MSG" != *"Finished"* ]]"
+            echo "'$COMMIT_MSG' != *'Finished'*"
             exit 1
           else
             echo "Commit message validation successful."
