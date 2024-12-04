@@ -45,6 +45,25 @@ public class Day01
     {
         var text = File.ReadAllText(_path);
 
-        Console.WriteLine("Part two: " + "");
+        var distances = text.Split("\r\n");
+
+        var leftSide = new List<string>();
+        var rightSide = new List<string>();
+
+        foreach (var distance in distances)
+        {
+            leftSide.Add(distance.Split(' ').First());
+            rightSide.Add(distance.Split(' ').Last());
+        }
+
+        var sum = 0;
+        foreach (var item in leftSide)
+        {
+            var asd = rightSide.FindAll(x => x == item);
+
+            sum += int.Parse(item) * asd.Count;
+        }
+
+        Console.WriteLine("Part two: " + sum);
     }
 }
