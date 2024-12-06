@@ -11,7 +11,7 @@ public class Day01
         PartTwo();
     }
 
-    public void PartOne()
+    private void PartOne()
     {
         var text = File.ReadAllText(_path);
         var distances = text.Split("\r\n");
@@ -35,7 +35,7 @@ public class Day01
         Console.WriteLine("Part one: " + sum);
     }
 
-    public void PartTwo()
+    private void PartTwo()
     {
         var text = File.ReadAllText(_path);
         var distances = text.Split("\r\n");
