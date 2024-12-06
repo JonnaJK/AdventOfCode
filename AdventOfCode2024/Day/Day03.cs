@@ -1,4 +1,6 @@
-﻿namespace AdventOfCode2024.Day;
+﻿using System.Text.RegularExpressions;
+
+namespace AdventOfCode2024.Day;
 
 public class Day03
 {
@@ -13,25 +15,36 @@ public class Day03
 
     private void PartOne()
     {
-        var reports = File.ReadAllLines(_path)
-            .Select(x =>
-                x.Split(' ', StringSplitOptions.RemoveEmptyEntries)
-                .Select(y => int.Parse(y))
-                .ToList())
-            .ToList();
+        var reports = File.ReadAllText(_path);
 
-        Console.WriteLine("Part one: " + "sum");
+        var pattern = new Regex("mul\\([0-9]+,[0-9]+\\)");
+        var matches = pattern.Matches(reports).ToList();
+
+        var sum = 0;
+        foreach (var match in matches)
+        {
+            var reducesText = match.Value.ToString().Substring(4);
+            var delimitor = reducesText.IndexOf(',');
+
+            var firstValue = int.Parse(reducesText[0..delimitor]);
+            var secondValues = reducesText[(delimitor + 1)..].SkipLast(1);
+
+            var second = string.Empty;
+            foreach (var value in secondValues)
+            {
+                second += value;
+            }
+            var resultPerMul = firstValue * int.Parse(second);
+            sum += resultPerMul;
+        }
+
+        Console.WriteLine("Part one: " + sum);
     }
 
     private void PartTwo()
     {
-        var reports = File.ReadAllLines(_path)
-            .Select(x =>
-                x.Split(' ', StringSplitOptions.RemoveEmptyEntries)
-                .Select(y => int.Parse(y))
-                .ToList())
-            .ToList();
+        var reports = File.ReadAllText(_path);
 
-        Console.WriteLine("Part one: " + "sum");
+        Console.WriteLine("Part two: " + "sum");
     }
 }

@@ -70,7 +70,7 @@ public class Day02
             sum += IsSafeReport(report, true);
         }
 
-        Console.WriteLine("Part one: " + sum);
+        Console.WriteLine("Part two: " + sum);
     }
 
     private static int IsSafeReportWithProblemDampener(List<int> report, int i)
