@@ -11,89 +11,44 @@ public class Day02
         PartTwo();
     }
 
-    public void PartOne()
+    private void PartOne()
     {
-        var text = File.ReadAllText(_path);
-
-        var reports = text.Split("\r\n");
+        var reports = File.ReadAllLines(_path)
+            .Select(x =>
+                x.Split(' ', StringSplitOptions.RemoveEmptyEntries)
+                .Select(y => int.Parse(y))
+                .ToList())
+            .ToList();
 
         var sum = 0;
         foreach (var report in reports)
         {
-            var valuesPerReport = report.Split(" ");
-
-            var decreaseCounter = 0;
-            var increaseCounter = 0;
+            var isAscending = (report[0] - report[1]) < 0;
             var isSafeReport = true;
-            for (int i = 0; i < valuesPerReport.Length - 1; i++)
+            for (int i = 0; i < report.Count - 1; i++)
             {
-                if (isSafeReport is false)
-                    break;
+                var diff = report[i] - report[i + 1];
 
-                //if (i == valuesPerReport.Count - 1)
-                //    break;
-
-                var first = int.Parse(valuesPerReport[i]);
-                var second = int.Parse(valuesPerReport[i + 1]);
-
-                if (first == second)
+                if (Math.Abs(diff) > 3 || diff == 0) // Unsafe - To much or no in-/decrease
                 {
-                    // Unsafe neither an increase or a decrease
                     isSafeReport = false;
                     break;
                 }
-
-                var isIncreasing = first < second;
-                var isDecreasing = first > second;
-
-                if (isIncreasing && isDecreasing)
+                if ((isAscending ^ diff < 0)) // Unsafe - report is increasing and decreasing
                 {
-                    // Unsafe neither an increase or a decrease
                     isSafeReport = false;
                     break;
-                }
-
-                if (isIncreasing) // increase
-                {
-                    var diff = second - first;
-                    if (diff >= 1 && diff <= 3)
-                    {
-                        // Safe
-                        increaseCounter++;
-                    }
-                    else
-                    {
-                        // Unsafe increaseing by more than 3
-                        isSafeReport = false;
-                        break;
-                    }
-                }
-                else // decrease
-                {
-                    var diff = first - second;
-                    if (diff >= 1 && diff <= 3)
-                    {
-                        // Safe
-                        decreaseCounter++;
-                    }
-                    else
-                    {
-                        // Unsafe decreaseing by more than 3
-                        isSafeReport = false;
-                        break;
-                    }
                 }
             }
-            if (isSafeReport && (increaseCounter > 0 && decreaseCounter > 0) is false)
-            {
+
+            if (isSafeReport)
                 sum += 1;
-            }
         }
 
         Console.WriteLine("Part one: " + sum);
     }
 
-    public void PartTwo()
+    private void PartTwo()
     {
         var text = File.ReadAllText(_path);
 
