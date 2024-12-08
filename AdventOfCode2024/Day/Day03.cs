@@ -20,6 +20,12 @@ public class Day03
         var pattern = new Regex("mul\\([0-9]+,[0-9]+\\)");
         var matches = pattern.Matches(reports).ToList();
 
+        var sum = CalculateMul(matches);
+        Console.WriteLine("Part one: " + sum);
+    }
+
+    private static int CalculateMul(List<Match> matches)
+    {
         var sum = 0;
         foreach (var match in matches)
         {
@@ -37,75 +43,32 @@ public class Day03
             var resultPerMul = firstValue * int.Parse(second);
             sum += resultPerMul;
         }
-
-        Console.WriteLine("Part one: " + sum);
+        return sum;
     }
 
     private void PartTwo()
     {
         var reports = File.ReadAllText(_path);
 
-        var dontPattern = "don't()";
-        var doPattern = "do()";
-        //var dontPattern = new Regex("don't\\(\\)");
-
-        var splittedByDont = reports.Split(new string[] { dontPattern.ToString() }, StringSplitOptions.RemoveEmptyEntries);
-
         var pattern = new Regex("mul\\([0-9]+,[0-9]+\\)");
-        var doOneTime = true;
-        var sum = 0;
+        var dontString = "don't()";
+        var doString = "do()";
+
+        var splittedByDont = reports.Split(new string[] { dontString.ToString() }, StringSplitOptions.RemoveEmptyEntries);
+
+        var matches = pattern.Matches(splittedByDont[0]).ToList();
+        var sum = CalculateMul(matches);
         for (int i = 0; i < splittedByDont.Length; i++)
         {
-            // do the first always
-            if (doOneTime)
-            {
-                var matches = pattern.Matches(splittedByDont[i]).ToList();
-
-                foreach (var match in matches)
-                {
-                    var reducesText = match.Value.ToString().Substring(4);
-                    var delimitor = reducesText.IndexOf(',');
-
-                    var firstValue = int.Parse(reducesText[0..delimitor]);
-                    var secondValues = reducesText[(delimitor + 1)..].SkipLast(1);
-
-                    var second = string.Empty;
-                    foreach (var value in secondValues)
-                    {
-                        second += value;
-                    }
-                    var resultPerMul = firstValue * int.Parse(second);
-                    sum += resultPerMul;
-                }
-                doOneTime = false;
-                continue;
-            }
-
-            var stringContainsDo = splittedByDont[i].Contains(doPattern);
-            if (stringContainsDo is false)
+            var isContainingDo = splittedByDont[i].Contains(doString);
+            if (isContainingDo is false)
                 continue;
 
-            var dos = splittedByDont[i].Split(new string[] { doPattern }, StringSplitOptions.RemoveEmptyEntries).Skip(1);
+            var dos = splittedByDont[i].Split(new string[] { doString }, StringSplitOptions.RemoveEmptyEntries).Skip(1);
             foreach (var item in dos)
             {
-                var matches = pattern.Matches(item).ToList();
-
-                foreach (var match in matches)
-                {
-                    var reducesText = match.Value.ToString().Substring(4);
-                    var delimitor = reducesText.IndexOf(',');
-
-                    var firstValue = int.Parse(reducesText[0..delimitor]);
-                    var secondValues = reducesText[(delimitor + 1)..].SkipLast(1);
-
-                    var second = string.Empty;
-                    foreach (var value in secondValues)
-                    {
-                        second += value;
-                    }
-                    var resultPerMul = firstValue * int.Parse(second);
-                    sum += resultPerMul;
-                }
+                matches = pattern.Matches(item).ToList();
+                sum += CalculateMul(matches);
             }
         }
 
