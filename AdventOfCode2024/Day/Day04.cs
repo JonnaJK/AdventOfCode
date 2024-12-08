@@ -150,41 +150,6 @@ public class Day04
         return 0;
     }
 
-    private static string GetReport(string[,] matrix, int row)
-    {
-        var report = string.Empty;
-        for (int i = 0; i < matrix.GetLength(1); i++)
-        {
-            report += matrix[row, i];
-        }
-        return report;
-    }
-
-    private static List<int> AllIndexesOf(string text, string value)
-    {
-        var indexes = new List<int>();
-        for (int index = 0; ; index += value.Length)
-        {
-            index = text.IndexOf(value, index);
-            if (index == -1)
-                return indexes;
-            indexes.Add(index);
-        }
-    }
-
-    private static List<int> AllIndexesOf(List<char> text, string value)
-    {
-        var myString = new string(text.ToArray());
-        var indexes = new List<int>();
-        for (int index = 0; ; index += value.Length)
-        {
-            index = myString.IndexOf(value, index);
-            if (index == -1)
-                return indexes;
-            indexes.Add(index);
-        }
-    }
-
     private static string[,] ConvertToMatrix(List<List<char>> reports)
     {
         var matrix = new string[reports.Count, reports[0].Count];
