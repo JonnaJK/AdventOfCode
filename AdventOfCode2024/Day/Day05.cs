@@ -23,7 +23,7 @@ public class Day05
             var pages = update.Split(',').ToList();
             for (int i = 0; i < pages.Count; i++)
             {
-                var page = pages[i]; //75
+                var page = pages[i];
                 var ruleForUpdate = rules.Where(x => x.First().Contains(page)).Select(x => x.Last()).ToList(); // eg 15
 
                 var pagesBefore = pages[..pages.IndexOf(page)];
@@ -49,8 +49,70 @@ public class Day05
 
     private void PartTwo()
     {
-        var text = File.ReadAllLines(_path);
+        var input = File.ReadAllLines(_path);
 
-        Console.WriteLine("Part two: " + "sum");
+        var rules = input.TakeWhile(x => x != "").Select(x => x.Split('|').ToList()).ToList();
+        var updates = input.TakeLast(input.Length - rules.Count - 1).ToList();
+
+        var incorrectlyOrderedUpdates = new List<string>();
+        var correctlyOrderedUpdates = new List<string>();
+        foreach (var update in updates)
+        {
+            var pages = update.Split(',').ToList();
+            for (int i = 0; i < pages.Count; i++)
+            {
+                var page = pages[i]; // 75
+                var ruleForPage = rules.Where(x => x.First().Contains(page)).Select(x => x.Last()).ToList();
+
+                //var ruleForPage = rules.Where(x => x.First().Contains(page)).ToList();
+
+                var pagesBefore = pages[..pages.IndexOf(page)];
+
+                var isViolatingRule = ruleForPage.Any(pagesBefore.Contains);
+                if (isViolatingRule)
+                {
+                    var indexOfViolations = ruleForPage.FindIndex(x => ruleForPage.Any(pagesBefore.Contains));
+                        //.ToList()
+                        //.Where(x => x != -1);
+                    var asd = ruleForPage[pages.IndexOf(page)];
+                }
+
+                //if (ruleForPage.Any(pagesBefore.Contains))
+                //{
+                //    var correctlyOrdered = "";
+                //    var incorrectlyOrderedUpdate = updates.Split(',');
+                //    foreach (var update in incorrectlyOrderedUpdate)
+                //    {
+
+                //    }
+
+                //    incorrectlyOrderedUpdates.Add(update);
+                //    var correctlyOrderedUpdate = MakeCorrectlyOrdered(update, rules.Where(x => x.First().Contains(page)).ToList());
+                //    correctlyOrderedUpdates.Add(correctlyOrderedUpdate);
+                //    break;
+                //}
+            }
+        }
+
+        var sum = 0;
+        foreach (var update in correctlyOrderedUpdates)
+        {
+            var asd = update.Split(',');
+            var asdasd = int.Parse(asd[asd.Length / 2]);
+            sum += asdasd;
+        }
+
+        Console.WriteLine("Part two: " + sum);
+    }
+
+    private static string MakeCorrectlyOrdered(string updates, List<string> ruleForUpdate)
+    {
+        var correctlyOrdered = "";
+        var incorrectlyOrderedUpdate = updates.Split(',');
+        foreach (var update in incorrectlyOrderedUpdate)
+        {
+
+        }
+        return correctlyOrdered;
     }
 }
