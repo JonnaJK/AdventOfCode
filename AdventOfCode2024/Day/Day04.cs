@@ -10,81 +10,73 @@ public class Day04
     {
         _path = Path.Combine(path, $"Input{GetType().Name}.txt");
         PartOne();
-        PartTwo1();
-        PartTwo2();
-        PartTwo3();
-        PartTwo4();
-        PartTwo5();
-        PartTwo6();
-        PartTwo7();
-        PartTwo8();
-        PartTwo10();
+        //PartTwo1();
+        //PartTwo2();
+        //PartTwo3();
+        //PartTwo4();
+        //PartTwo5();
+        //PartTwo6();
+        //PartTwo7();
+        //PartTwo8();
+        PartTwo();
     }
 
     private void PartOne()
     {
-        var reports = File.ReadAllLines(_path)
-            .Select(x =>
-                x.ToCharArray().ToList())
-            .ToList();
+        var reports = File.ReadAllLines(_path);
 
-        var first = "X";
-        var second = "M";
-        var third = "A";
-        var fourth = "S";
-
-        var matrix = ConvertToMatrix(reports);
-        var lowestIndex = 0;
-        var highestIndex = matrix.GetLength(0) - 1;
-
+        var rows = reports.Length;
+        var cols = reports[0].Length;
         var sum = 0;
-        for (int row = 0; row < matrix.GetLength(0); row++)
+        for (int i = 0; i < rows; i++)
         {
-            for (int col = 0; col < matrix.GetLength(1); col++)
+            for (int j = 0; j < cols; j++)
             {
-                var rowNotToLow = (row - 3) >= lowestIndex;
-                var colNotToLow = (col - 3) >= lowestIndex;
-                var rowNotToHigh = (row + 3) <= highestIndex;
-                var colNotToHigh = (col + 3) <= highestIndex;
-
-                if (matrix[row, col].Equals(first, StringComparison.CurrentCultureIgnoreCase) is false)
-                    continue;
-
-                // North ^
-                if (rowNotToLow)
-                    sum += CheckNorth(matrix, row, col);
-
-                // North East ↗
-                if (rowNotToLow && colNotToHigh)
-                    sum += CheckNorthEast(matrix, row, col, second, third, fourth);
-
-                // East ->
-                if (colNotToHigh)
-                    sum += CheckEast(matrix, row, col);
-
-                // South East ↘
-                if (rowNotToHigh && colNotToHigh)
-                    sum += CheckSouthEast(matrix, row, col, second, third, fourth);
-
-                // South v
-                if (rowNotToHigh)
-                    sum += CheckSouth(matrix, row, col);
-
-                // South West ↙
-                if (rowNotToHigh && colNotToLow)
-                    sum += CheckSouthWest(matrix, row, col, second, third, fourth);
-
-                // West <-
-                if (colNotToLow)
-                    sum += CheckWest(matrix, row, col);
-
-                // North West ↖
-                if (rowNotToLow && colNotToLow)
-                    sum += CheckNorthWest(matrix, row, col, second, third, fourth);
-
+                sum += GetXMASFromAllDirections(reports, i, j, rows - 1);
             }
         }
         Console.WriteLine("Part one: " + sum);
+    }
+
+    private static int GetXMASFromAllDirections(string[] reports, int i, int j, int maxIndex)
+    {
+        if (reports[i][j] != 'X')
+            return 0;
+
+        var sum = 0;
+        // Up ^
+        if (i - 3 >= 0 && reports[i - 1][j] == 'M' && reports[i - 2][j] == 'A' && reports[i - 3][j] == 'S')
+            sum++;
+
+        // Down v
+        if (i + 3 <= maxIndex && reports[i + 1][j] == 'M' && reports[i + 2][j] == 'A' && reports[i + 3][j] == 'S')
+            sum++;
+
+        // Left <-
+        if (j - 3 >= 0 && reports[i][j - 1] == 'M' && reports[i][j - 2] == 'A' && reports[i][j - 3] == 'S')
+            sum++;
+
+        // Right ->
+        if (j + 3 <= maxIndex && reports[i][j + 1] == 'M' && reports[i][j + 2] == 'A' && reports[i][j + 3] == 'S')
+            sum++;
+
+        // Up-left ↖
+        if (i - 3 >= 0 && j - 3 >= 0 && reports[i - 1][j - 1] == 'M' && reports[i - 2][j - 2] == 'A' && reports[i - 3][j - 3] == 'S')
+            sum++;
+
+        // Up-right ↗
+        if (i - 3 >= 0 && j + 3 <= maxIndex && reports[i - 1][j + 1] == 'M' && reports[i - 2][j + 2] == 'A' && reports[i - 3][j + 3] == 'S')
+            sum++;
+
+        // Down-left ↙
+        if (i + 3 <= maxIndex && j - 3 >= 0 && reports[i + 1][j - 1] == 'M' && reports[i + 2][j - 2] == 'A' && reports[i + 3][j - 3] == 'S')
+            sum++;
+
+        // Down-right ↘
+        if (i + 3 <= maxIndex && j + 3 <= maxIndex && reports[i + 1][j + 1] == 'M' && reports[i + 2][j + 2] == 'A' && reports[i + 3][j + 3] == 'S')
+            sum++;
+
+        return sum;
     }
 
     private int CheckNorth(string[,] matrix, int row, int col)
@@ -1199,7 +1191,7 @@ public class Day04
         Console.WriteLine("Part two version 9: " + sum);
     }
 
-    private void PartTwo10()
+    private void PartTwo()
     {
         string[] reports = File.ReadAllLines(_path);
 
