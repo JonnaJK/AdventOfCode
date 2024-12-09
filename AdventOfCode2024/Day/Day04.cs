@@ -10,14 +10,14 @@ public class Day04
     {
         _path = Path.Combine(path, $"Input{GetType().Name}.txt");
         PartOne();
-        //PartTwo1();
-        //PartTwo2();
-        //PartTwo3();
-        //PartTwo4();
-        //PartTwo5();
-        //PartTwo6();
-        //PartTwo7();
-        //PartTwo8();
+        PartTwo1();
+        PartTwo2();
+        PartTwo3();
+        PartTwo4();
+        PartTwo5();
+        PartTwo6();
+        PartTwo7();
+        PartTwo8();
         PartTwo();
     }
 
