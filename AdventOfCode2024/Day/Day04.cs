@@ -3,6 +3,10 @@
 public class Day04
 {
     private readonly string _path;
+    private readonly char _letterX = 'X';
+    private readonly char _letterM = 'M';
+    private readonly char _letterA = 'A';
+    private readonly char _letterS = 'S';
     public Day04(string path)
     {
         _path = Path.Combine(path, $"Input{GetType().Name}.txt");
@@ -27,42 +31,42 @@ public class Day04
         Console.WriteLine("Part one: " + sum);
     }
 
-    private static int GetXMASFromAllDirections(string[] reports, int i, int j, int maxIndex)
+    private int GetXMASFromAllDirections(string[] reports, int i, int j, int maxIndex)
     {
-        if (reports[i][j] != 'X')
+        if (reports[i][j] != _letterX)
             return 0;
 
         var sum = 0;
         // Up ^
-        if (i - 3 >= 0 && reports[i - 1][j] == 'M' && reports[i - 2][j] == 'A' && reports[i - 3][j] == 'S')
+        if (i - 3 >= 0 && reports[i - 1][j] == _letterM && reports[i - 2][j] == _letterA && reports[i - 3][j] == _letterS)
             sum++;
 
         // Down v
-        if (i + 3 <= maxIndex && reports[i + 1][j] == 'M' && reports[i + 2][j] == 'A' && reports[i + 3][j] == 'S')
+        if (i + 3 <= maxIndex && reports[i + 1][j] == _letterM && reports[i + 2][j] == _letterA && reports[i + 3][j] == _letterS)
             sum++;
 
         // Left <-
-        if (j - 3 >= 0 && reports[i][j - 1] == 'M' && reports[i][j - 2] == 'A' && reports[i][j - 3] == 'S')
+        if (j - 3 >= 0 && reports[i][j - 1] == _letterM && reports[i][j - 2] == _letterA && reports[i][j - 3] == _letterS)
             sum++;
 
         // Right ->
-        if (j + 3 <= maxIndex && reports[i][j + 1] == 'M' && reports[i][j + 2] == 'A' && reports[i][j + 3] == 'S')
+        if (j + 3 <= maxIndex && reports[i][j + 1] == _letterM && reports[i][j + 2] == _letterA && reports[i][j + 3] == _letterS)
             sum++;
 
         // Up-left ↖
-        if (i - 3 >= 0 && j - 3 >= 0 && reports[i - 1][j - 1] == 'M' && reports[i - 2][j - 2] == 'A' && reports[i - 3][j - 3] == 'S')
+        if (i - 3 >= 0 && j - 3 >= 0 && reports[i - 1][j - 1] == _letterM && reports[i - 2][j - 2] == _letterA && reports[i - 3][j - 3] == _letterS)
             sum++;
 
         // Up-right ↗
-        if (i - 3 >= 0 && j + 3 <= maxIndex && reports[i - 1][j + 1] == 'M' && reports[i - 2][j + 2] == 'A' && reports[i - 3][j + 3] == 'S')
+        if (i - 3 >= 0 && j + 3 <= maxIndex && reports[i - 1][j + 1] == _letterM && reports[i - 2][j + 2] == _letterA && reports[i - 3][j + 3] == _letterS)
             sum++;
 
         // Down-left ↙
-        if (i + 3 <= maxIndex && j - 3 >= 0 && reports[i + 1][j - 1] == 'M' && reports[i + 2][j - 2] == 'A' && reports[i + 3][j - 3] == 'S')
+        if (i + 3 <= maxIndex && j - 3 >= 0 && reports[i + 1][j - 1] == _letterM && reports[i + 2][j - 2] == _letterA && reports[i + 3][j - 3] == _letterS)
             sum++;
 
         // Down-right ↘
-        if (i + 3 <= maxIndex && j + 3 <= maxIndex && reports[i + 1][j + 1] == 'M' && reports[i + 2][j + 2] == 'A' && reports[i + 3][j + 3] == 'S')
+        if (i + 3 <= maxIndex && j + 3 <= maxIndex && reports[i + 1][j + 1] == _letterM && reports[i + 2][j + 2] == _letterA && reports[i + 3][j + 3] == _letterS)
             sum++;
 
         return sum;
@@ -74,25 +78,45 @@ public class Day04
 
         var rows = reports.Length;
         var cols = reports[0].Length;
-        var sum = 0;
 
-        for (int i = 1; i < rows - 1; i++)
+        var sum = 0;
+        for (int i = 0; i < rows; i++)
         {
-            for (int j = 1; j < cols - 1; j++)
+            for (int j = 0; j < cols; j++)
             {
-                if (reports[i][j] != 'A')
+                if (reports[i][j] != _letterA)
                     continue;
 
-                // Check upper-left + lower-right diagonal combined with upper-right + lower-left diagonal
-                var topLeftMAS = i > 0 && j > 0 && reports[i - 1][j - 1] == 'M' && reports[i + 1][j + 1] == 'S';
-                var topLeftSAM = i > 0 && j > 0 && reports[i - 1][j - 1] == 'S' && reports[i + 1][j + 1] == 'M';
-                var topRightMAS = i > 0 && j < cols - 1 && reports[i - 1][j + 1] == 'M' && reports[i + 1][j - 1] == 'S';
-                var topRightSAM = i > 0 && j < cols - 1 && reports[i - 1][j + 1] == 'S' && reports[i + 1][j - 1] == 'M';
-
-                if ((topLeftMAS || topLeftSAM) && (topRightMAS || topRightSAM))
-                    sum++;
+                sum += GetX_MASFromFourDirections(reports, i, j);
             }
         }
         Console.WriteLine("Part two: " + sum);
+    }
+
+    private int GetX_MASFromFourDirections(string[] reports, int i, int j)
+    {
+        var highestIndex = reports.Length - 1;
+
+        var rowCanGoNegative = i - 1 >= 0;
+        var colCanGoNegative = j - 1 >= 0;
+        var rowCanGoPositive = i + 1 <= highestIndex;
+        var colCanGoPositive = j + 1 <= highestIndex;
+
+        if (!rowCanGoNegative || !rowCanGoPositive || !colCanGoPositive || !colCanGoNegative)
+            return 0;
+
+        var upperLeft = reports[i - 1][j - 1] == _letterM && reports[i + 1][j + 1] == _letterS;
+        var upperRight = reports[i - 1][j + 1] == _letterM && reports[i + 1][j - 1] == _letterS;
+        var lowerLeft = reports[i + 1][j - 1] == _letterM && reports[i - 1][j + 1] == _letterS;
+        var lowerRight = reports[i + 1][j + 1] == _letterM && reports[i - 1][j - 1] == _letterS;
+
+        if ((upperLeft && (upperRight || lowerRight)) ||
+            (upperRight && (upperLeft || lowerRight)) ||
+            (lowerLeft && (upperLeft || lowerRight)) ||
+            (lowerRight && (lowerLeft || upperRight)))
+        {
+            return 1;
+        }
+        return 0;
     }
 }
