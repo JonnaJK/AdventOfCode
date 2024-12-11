@@ -8,9 +8,10 @@ public class Day05
     public Day05(string path)
     {
         _path = Path.Combine(path, $"Input{GetType().Name}.txt");
-        PartOne();
-        PartTwoTest1();
-        PartTwoTest2();
+        //PartOne();
+        Test();
+        //PartTwoTest1();
+        //PartTwoTest2();
     }
 
     private void PartOne()
@@ -48,6 +49,94 @@ public class Day05
         }
 
         Console.WriteLine("Part one: " + sum);
+    }
+
+    private void Test()
+    {
+        var input = File.ReadAllLines(_path);
+
+        var rules = input.TakeWhile(x => x != "").Select(x => x.Split('|').ToList()).ToList();
+        var updates = input.TakeLast(input.Length - rules.Count - 1).ToList();
+
+        // go row for row to check for violations
+        var sum = 0;
+        for (int i = 0; i < updates.Count; i++)
+        {
+            var isViolatingRule = CheckIfUpdatesViolatesRules(updates[i], rules);
+
+            if (isViolatingRule)
+                sum += GetRightlyOrderedMiddlePageNumber(updates[i], rules);
+        }
+
+
+        // if violation then send to method to make right
+        // only exit when the row is correct
+        // return the middle sum
+
+        Console.WriteLine("Part twooooo: " + sum);
+    }
+
+    private static int GetRightlyOrderedMiddlePageNumber(string update, List<List<string>> rules)
+    {
+        var pagesInUpdate = update.Split(',').ToList();
+
+
+        var result = 0;
+        for (int i = 0; i < pagesInUpdate.Count; i++)
+        {
+            var pageInUpdate = pagesInUpdate[i];
+            var pagesBefore = pagesInUpdate[..i];
+            if (pagesBefore.Count == 0)
+                continue;
+
+            var pagesAfter = pagesInUpdate[(i + 1)..];
+            var ruleForPage = rules.Where(x => x.First().Contains(pageInUpdate)).Select(x => x.Last()).ToList();
+
+            if (ruleForPage.Any(pagesBefore.Contains))
+            {
+                var updatesInNewOrder = new List<string>();
+                var pagesToAddAfter = new List<string>();
+                var violatedRules = ruleForPage.Where(pagesBefore.Contains).ToList();
+                updatesInNewOrder = pagesBefore;
+                foreach (var rule in violatedRules)
+                {
+                    updatesInNewOrder.Remove(rule);
+
+                    //wrong number first? try sort the other way?
+                    pagesToAddAfter.Add(rule);
+                }
+                updatesInNewOrder.Add(pageInUpdate);
+                updatesInNewOrder.AddRange(pagesToAddAfter);
+                updatesInNewOrder.AddRange(pagesAfter);
+                pagesInUpdate = updatesInNewOrder;
+                i = -1;
+            }
+        }
+        var middlePage = int.Parse(pagesInUpdate[pagesInUpdate.Count / 2]);
+        result += middlePage;
+
+        return result;
+    }
+
+    // TODO: Make int = 1 instead of 0?
+    private static bool CheckIfUpdatesViolatesRules(string update, List<List<string>> rules)
+    {
+        var pagesInUpdate = update.Split(',').ToList();
+
+        for (int i = 0; i < pagesInUpdate.Count; i++)
+        {
+            var pageInUpdate = pagesInUpdate[i];
+            var pagesBefore = pagesInUpdate[..i];
+            if (pagesBefore.Count == 0)
+                continue;
+
+            var pagesAfter = pagesInUpdate[(i + 1)..];
+            var ruleForPage = rules.Where(x => x.First().Contains(pageInUpdate)).Select(x => x.Last()).ToList();
+
+            if (ruleForPage.Any(pagesBefore.Contains))
+                return true;
+        }
+        return false;
     }
 
     private void PartTwoTest2()
