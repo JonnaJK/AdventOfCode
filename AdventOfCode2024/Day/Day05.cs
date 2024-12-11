@@ -65,51 +65,51 @@ public class Day05
                 sum += GetRightlyOrderedMiddlePageNumber(updates[i], rules);
         }
 
-        Console.WriteLine("Part twooooo: " + sum);
+        Console.WriteLine("Part two: " + sum);
     }
 
     private static int GetRightlyOrderedMiddlePageNumber(string update, List<List<string>> rules)
     {
-        var pagesInUpdate = update.Split(',').ToList();
+        var pages = update.Split(',').ToList();
 
-        var result = 0;
-        for (int i = 0; i < pagesInUpdate.Count; i++)
+        for (int i = 0; i < pages.Count; i++)
         {
-            var pageInUpdate = pagesInUpdate[i];
-            var pagesBefore = pagesInUpdate[..i];
-            if (pagesBefore.Count == 0)
+            var currentPage = pages[i];
+            var pagesBefore = pages.Take(i).ToList();
+            var pagesAfter = pages.Skip(i + 1).ToList();
+
+            if (!pagesBefore.Any())
                 continue;
 
-            var pagesAfter = pagesInUpdate[(i + 1)..];
-            var ruleForPage = rules.Where(x => x.First().Contains(pageInUpdate)).Select(x => x.Last()).ToList();
+            var applicableRules = rules
+                .Where(rule => rule.First().Contains(currentPage))
+                .Select(rule => rule.Last())
+                .ToList();
 
-            if (!ruleForPage.Any(pagesBefore.Contains))
+            if (!applicableRules.Any(pagesBefore.Contains))
                 continue;
 
-            pagesInUpdate = MakeNewUpdateRow(ruleForPage, pagesBefore, pageInUpdate, pagesAfter);
+            pages = ReorderPages(applicableRules, pagesBefore, currentPage, pagesAfter);
             i = -1;
         }
-        var middlePage = int.Parse(pagesInUpdate[pagesInUpdate.Count / 2]);
-        result += middlePage;
 
-        return result;
+        return int.Parse(pages[pages.Count / 2]);
     }
 
-    private static List<string> MakeNewUpdateRow(List<string> ruleForPage, List<string> pagesBefore, string pageInUpdate, List<string> pagesAfter)
+    private static List<string> ReorderPages(List<string> rules, List<string> pagesBefore, string pageInUpdate, List<string> pagesAfter)
     {
-        var updatesInNewOrder = new List<string>();
-        var pagesToAddAfter = new List<string>();
-        var violatedRules = ruleForPage.Where(pagesBefore.Contains).ToList();
-        updatesInNewOrder = pagesBefore;
+        var violatedRules = rules.Where(pagesBefore.Contains).ToList();
+        var reorderedPages = new List<string>();
+
+        reorderedPages = pagesBefore;
         foreach (var rule in violatedRules)
         {
-            updatesInNewOrder.Remove(rule);
-            pagesToAddAfter.Add(rule);
+            reorderedPages.Remove(rule);
         }
-        updatesInNewOrder.Add(pageInUpdate);
-        updatesInNewOrder.AddRange(pagesToAddAfter);
-        updatesInNewOrder.AddRange(pagesAfter);
-        return updatesInNewOrder;
+        reorderedPages.Add(pageInUpdate);
+        reorderedPages.AddRange(violatedRules);
+        reorderedPages.AddRange(pagesAfter);
+        return reorderedPages;
     }
 
     private static bool CheckIfUpdatesViolatesRules(string update, List<List<string>> rules)
