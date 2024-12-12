@@ -14,6 +14,33 @@ public class Day06
     {
         var input = File.ReadAllLines(_path);
 
+        var startingDirection = '^';
+        if (input.Any(x => x.Contains('^')))
+            startingDirection = '^';
+        else if (input.Any(x => x.Contains('v')))
+            startingDirection = 'v';
+        else if (input.Any(x => x.Contains('<')))
+            startingDirection = '<';
+        else if (input.Any(x => x.Contains('>')))
+            startingDirection = '>';
+
+        (int x, int y) guardCordinates =
+        (
+            input.ToList().FindIndex(x => x.Contains(startingDirection)),
+            Array.IndexOf(input.First(x => x.Contains(startingDirection)).ToCharArray(), startingDirection)
+        );
+
+        while (input.Any(x => x.Contains('^')) ||
+            input.Any(x => x.Contains('v')) ||
+            input.Any(x => x.Contains('<')) ||
+            input.Any(x => x.Contains('>')))
+        {
+            for (int i = 0; i < input.Length; i++)
+            {
+
+            }
+        }
+
         /*
          first find the guard, a char that is not '.' or '#'
         determine which way the guard is going (^ up, v down, < left, > right)
