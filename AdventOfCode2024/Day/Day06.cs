@@ -14,15 +14,20 @@ public class Day06
     {
         var input = File.ReadAllLines(_path);
 
-        var startingDirection = '^';
-        if (input.Any(x => x.Contains('^')))
-            startingDirection = '^';
-        else if (input.Any(x => x.Contains('v')))
-            startingDirection = 'v';
-        else if (input.Any(x => x.Contains('<')))
-            startingDirection = '<';
-        else if (input.Any(x => x.Contains('>')))
-            startingDirection = '>';
+        var up = '^';
+        var down = 'v';
+        var left = '<';
+        var right = '>';
+        var startingDirection = up;
+
+        if (input.Any(x => x.Contains(up)))
+            startingDirection = up;
+        else if (input.Any(x => x.Contains(down)))
+            startingDirection = down;
+        else if (input.Any(x => x.Contains(left)))
+            startingDirection = left;
+        else if (input.Any(x => x.Contains(right)))
+            startingDirection = right;
 
         (int x, int y) guardCordinates =
         (
@@ -37,7 +42,10 @@ public class Day06
         {
             for (int i = 0; i < input.Length; i++)
             {
+                for (int j = 0; j < input[0].Length; j++)
+                {
 
+                }
             }
         }
 
